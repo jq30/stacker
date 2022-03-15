@@ -6,9 +6,11 @@ void setup() {
 
   HashMap<Integer, RGB> ColorMappings = new HashMap<Integer, RGB>();
   ColorMappings.put(0, new RGB(0, 0, 0));
+  ColorMappings.put(1, new RGB(255, 255, 255));
 
   int[][] grid = new int[10][40];
-  grid[3][5] = 3;
+  grid[3][5] = 1;
+  grid[5][3] = 1;
 
   drawArray(grid, ColorMappings);
 }
@@ -18,7 +20,8 @@ void drawArray(int[][] array, HashMap<Integer, RGB> ColorMappings) {
 
   for (int i = 0; i < array.length; i++) {
     for (int k = 0; k < array[i].length; k++) {
-      if (array[i][k] == 0) {fill(0, 0, 0);} else {fill(255, 255, 255);}
+      RGB fillColor = ColorMappings.get(array[i][k]);
+      fill(fillColor.R, fillColor.G, fillColor.B);
       rect(i * SCALE_FACTOR, k * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR);
     }
   }
@@ -30,10 +33,10 @@ void drawArray(int[][] array, HashMap<Integer, RGB> ColorMappings) {
 // }
 
 class RGB {
-  int R, G, B;
+  public int R, G, B;
   RGB(int r, int g, int b) {
-    R = r;
-    G = g;
-    B = b;
+    this.R = r;
+    this.G = g;
+    this.B = b;
   }
 }

@@ -1,10 +1,13 @@
 import java.util.*;
 
+Tetromino uwu = new Tetromino(5, 5, 2);
+HashMap<Integer, RGB> ColorMappings;
+
 void setup() {
   size(400, 600);
   noStroke();
 
-  HashMap<Integer, RGB> ColorMappings = new HashMap<Integer, RGB>();
+  ColorMappings = new HashMap<Integer, RGB>();
   ColorMappings.put(0, new RGB(0, 0, 0));
   ColorMappings.put(1, new RGB(69, 215, 224));
   ColorMappings.put(2, new RGB(198, 117, 245));
@@ -15,18 +18,12 @@ void setup() {
   ColorMappings.put(7, new RGB(254, 255, 102));
 
   int[][] grid = new int[10][40];
-  for (int[] row : grid) {
-    for (int i = 0; i < row.length; i++) {
-      row[i] = randInt(0, 7);
-    }
-  }
 
   drawArray(grid, ColorMappings);
 }
 
 void drawArray(int[][] array, HashMap<Integer, RGB> ColorMappings) {
   float SCALE_FACTOR = 10;
-
   for (int i = 0; i < array.length; i++) {
     for (int k = 0; k < array[i].length; k++) {
       RGB fillColor = ColorMappings.get(array[i][k]);
@@ -47,4 +44,27 @@ class RGB {
     this.G = g;
     this.B = b;
   }
+}
+
+class Tetromino {
+  int x, y, value;
+  Tetromino(int x, int y, int value) {
+    this.x = x;
+    this.y = y;
+    this.value = value;
+  }
+  void render(HashMap<Integer, RGB> ColorMappings) {
+    float SCALE_FACTOR = 10;
+    RGB fillColor = ColorMappings.get(value);
+    fill(fillColor.R, fillColor.G, fillColor.B);
+    rect(x * SCALE_FACTOR, y * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR);
+  }
+  void advance() {
+    y++;
+  }
+}
+
+void draw() {
+  uwu.render(ColorMappings);
+  uwu.advance();
 }

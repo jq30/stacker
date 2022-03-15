@@ -2,10 +2,14 @@ import java.util.*;
 
 Tetromino uwu = new Tetromino(5, 5, 2);
 HashMap<Integer, RGB> ColorMappings;
+int[][] grid;
+float SCALE_FACTOR;
 
 void setup() {
   size(400, 600);
   noStroke();
+
+  SCALE_FACTOR = 10;
 
   ColorMappings = new HashMap<Integer, RGB>();
   ColorMappings.put(0, new RGB(0, 0, 0));
@@ -17,13 +21,11 @@ void setup() {
   ColorMappings.put(6, new RGB(102, 255, 129));
   ColorMappings.put(7, new RGB(254, 255, 102));
 
-  int[][] grid = new int[10][40];
-
-  drawArray(grid, ColorMappings);
+  grid = new int[10][40];
+  drawArray(grid);
 }
 
-void drawArray(int[][] array, HashMap<Integer, RGB> ColorMappings) {
-  float SCALE_FACTOR = 10;
+void drawArray(int[][] array) {
   for (int i = 0; i < array.length; i++) {
     for (int k = 0; k < array[i].length; k++) {
       RGB fillColor = ColorMappings.get(array[i][k]);
@@ -53,8 +55,7 @@ class Tetromino {
     this.y = y;
     this.value = value;
   }
-  void render(HashMap<Integer, RGB> ColorMappings) {
-    float SCALE_FACTOR = 10;
+  void render() {
     RGB fillColor = ColorMappings.get(value);
     fill(fillColor.R, fillColor.G, fillColor.B);
     rect(x * SCALE_FACTOR, y * SCALE_FACTOR, SCALE_FACTOR, SCALE_FACTOR);
@@ -65,6 +66,7 @@ class Tetromino {
 }
 
 void draw() {
-  uwu.render(ColorMappings);
+  drawArray(grid);
+  uwu.render();
   uwu.advance();
 }

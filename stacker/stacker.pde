@@ -4,6 +4,7 @@ Tetromino uwu = new Tetromino(5, 5, 2);
 HashMap<Integer, RGB> ColorMappings;
 int[][] grid;
 float SCALE_FACTOR;
+int time = 0;
 
 void setup() {
   size(400, 600);
@@ -68,5 +69,9 @@ class Tetromino {
 void draw() {
   drawArray(grid);
   uwu.render();
-  uwu.advance();
+
+  if (millis() > time) {
+    uwu.advance();
+    time += 200;
+  }
 }
